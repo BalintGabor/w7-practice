@@ -8,13 +8,13 @@ const beerSectionComponent = function (title, sub, text, id) {
     return `
         <section id="${id}">
             <h1 class="beerName">${title}</h1>
-            <h1 class="beerCompany">${sub}</h1>
-            <h1 class="beerType">${text}</h1>
+            <h2 class="beerCompany">${sub}</h2>
+            <h3 class="beerType">${text}</h3>
         </section>
     `
 }
 
-const beerAnchorComponent = function (id, title) {
+const beerAnchorComponent = function (title, id) {
     return `
         <a href="#${id}">${title}</a>  
     `
@@ -23,6 +23,12 @@ const beerAnchorComponent = function (id, title) {
 const menuButtonClickEvent = function (event) {
  
     event.currentTarget.closest("#root").classList.toggle("menu-opened");
+}
+
+const beerNavComponent = function (inner) {
+    return `
+        <nav>${inner}</nav>
+    `
 }
 
 const loadEvent = function () {
@@ -41,7 +47,7 @@ const loadEvent = function () {
 
     menuButtonElement.addEventListener("click", menuButtonClickEvent)
 
-    let beerSections = ""
+    let beerSections = "";
     
     for (const beer of beers.cards) {
         beerSections += beerSectionComponent(beer.title, beer.sub, beer.text);
@@ -49,6 +55,14 @@ const loadEvent = function () {
     
 
     rootElement.insertAdjacentHTML("beforeend", beerSections);
+
+    let beerAnchors = "";
+
+    for (const beer of beers.cards) {
+        beerAnchors += beerAnchorComponent(beer.title)
+    }
+
+    rootElement.insertAdjacentHTML("beforeend", beerNavComponent(beerAnchors));
 
 }
 window.addEventListener("load", loadEvent) // CALL back function - függvényre bízzuk rá, hogy mikor fusson le
